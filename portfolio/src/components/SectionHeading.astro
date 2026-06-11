@@ -1,0 +1,42 @@
+---
+interface Props {
+  /** Sheet number rendered in the annotation, e.g. "02". */
+  sheet: string;
+  /** Section title. */
+  title: string;
+  /** Anchor id for in-page navigation. */
+  id: string;
+}
+
+const { sheet, title, id } = Astro.props;
+---
+
+<section class="section" id={id}>
+  <div class="container">
+    <header class="section__head">
+      <p class="mono-label">Sheet {sheet}</p>
+      <h2 class="section__title">{title}</h2>
+    </header>
+    <slot />
+  </div>
+</section>
+
+<style>
+  .section {
+    padding-block: var(--space-section);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .section__head {
+    display: flex;
+    align-items: baseline;
+    gap: 1.25rem;
+    margin-bottom: clamp(2rem, 5vw, 3.5rem);
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--line-strong);
+  }
+
+  .section__title {
+    font-size: var(--text-xl);
+  }
+</style>

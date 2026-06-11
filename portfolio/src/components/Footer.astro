@@ -1,0 +1,92 @@
+---
+import { PROFILE } from '../site.config';
+
+const year = new Date().getFullYear();
+const contacts = [
+  { label: 'Email', value: PROFILE.email, href: `mailto:${PROFILE.email}` },
+  { label: 'Phone', value: PROFILE.phone, href: `tel:${PROFILE.phone.replace(/\s/g, '')}` },
+  { label: 'GitHub', value: 'BrandonVC214858', href: PROFILE.github },
+  { label: 'LinkedIn', value: 'Connect', href: PROFILE.linkedin },
+];
+---
+
+<footer class="footer" id="contact">
+  <div class="container">
+    <p class="mono-label">Sheet 06 — Contact</p>
+    <h2 class="footer__title">Let's build something reliable.</h2>
+    <p class="footer__note">
+      Open to remote frontend and full-stack roles. The fastest way to reach me is email.
+    </p>
+
+    <ul class="footer__contacts">
+      {
+        contacts.map((contact) => (
+          <li class="footer__cell">
+            <span class="mono-label">{contact.label}</span>
+            <a
+              class="footer__link"
+              href={contact.href}
+              rel={contact.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+              target={contact.href.startsWith('http') ? '_blank' : undefined}
+            >
+              {contact.value}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+
+    <p class="footer__legal mono-label">
+      © {year} {PROFILE.name} · Built with Astro
+    </p>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    padding-block: var(--space-section);
+  }
+
+  .footer__title {
+    margin-top: 1rem;
+    font-size: var(--text-xl);
+  }
+
+  .footer__note {
+    max-width: 48ch;
+    margin-top: 1rem;
+    color: var(--chalk);
+  }
+
+  .footer__contacts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+    margin-top: 2.5rem;
+    border: 1px solid var(--line-strong);
+  }
+
+  .footer__cell {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    padding: 1rem 1.1rem;
+    border-right: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .footer__link {
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    color: var(--paper);
+    overflow-wrap: anywhere;
+  }
+
+  .footer__link:hover {
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  .footer__legal {
+    margin-top: 3rem;
+  }
+</style>

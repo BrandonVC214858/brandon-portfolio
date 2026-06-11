@@ -1,0 +1,38 @@
+[
+  {
+    "id": "compliance-engine",
+    "order": 1,
+    "name": "Financial Risk Compliance Engine",
+    "role": "Backend & AI Engineer · Thesis project",
+    "description": "Automated financial risk detection prototype (PLD/FT) that cross-references transactions against international compliance datasets in real time.",
+    "highlights": [
+      "Built the detection engine with Python and FastAPI, applying Retrieval-Augmented Generation (RAG) to screen entities against OFAC and UN sanction lists.",
+      "Implemented data ingestion pipelines and structured test coverage, then dockerized the full stack for reliable, reproducible local deployment with centralized logging."
+    ],
+    "stack": ["Python", "FastAPI", "RAG", "Docker", "PostgreSQL"]
+  },
+  {
+    "id": "ticket-system",
+    "order": 2,
+    "name": "Internal Ticket Management System",
+    "role": "Full Stack · Backend lead",
+    "description": "Client-server task management platform with a Kanban engine for tracking internal work.",
+    "highlights": [
+      "Implemented stateless JWT authorization and custom middleware for Excel report exports on the backend.",
+      "Engineered a drag-and-drop Kanban dashboard with real-time layout updates driven by structured state rendering."
+    ],
+    "stack": ["React", "Python", "JWT", "REST APIs"]
+  },
+  {
+    "id": "gestor-gym",
+    "order": 3,
+    "name": "Gestor Gym — Management UI Prototypes",
+    "role": "UI/UX Designer & Developer",
+    "description": "High-fidelity application prototypes for a fitness management ecosystem.",
+    "highlights": [
+      "Designed the full prototype set in Figma, from asset blueprints to interaction flows.",
+      "Translated the designs into interactive, responsive view codebases consistent across device sizes."
+    ],
+    "stack": ["Figma", "React", "TailwindCSS"]
+  }
+]

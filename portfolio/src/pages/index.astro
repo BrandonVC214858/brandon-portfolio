@@ -1,0 +1,156 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Hero from '../components/Hero.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import ExperienceItem from '../components/ExperienceItem.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import Footer from '../components/Footer.astro';
+import { skillGroups } from '../data/skills';
+
+const byOrder = <T extends { data: { order: number } }>(a: T, b: T) =>
+  a.data.order - b.data.order;
+
+const experience = (await getCollection('experience')).sort(byOrder);
+const projects = (await getCollection('projects')).sort(byOrder);
+---
+
+<BaseLayout>
+  <Header />
+  <main id="main">
+    <Hero />
+
+    <SectionHeading sheet="02" title="Experience" id="experience">
+      <div>
+        {experience.map((entry) => <ExperienceItem entry={entry} />)}
+      </div>
+    </SectionHeading>
+
+    <SectionHeading sheet="03" title="Selected projects" id="projects">
+      <div class="projects-grid">
+        {projects.map((entry) => <ProjectCard entry={entry} />)}
+      </div>
+    </SectionHeading>
+
+    <SectionHeading sheet="04" title="Skills" id="skills">
+      <dl class="skills-grid">
+        {
+          skillGroups.map((group) => (
+            <div class="skills-group">
+              <dt class="skills-label">
+                <span class="skills-code mono-label">{group.code}</span>
+                {group.label}
+              </dt>
+              <dd class="skills-items">
+                <ul>
+                  {group.items.map((item) => (
+                    <li class="tag">{item}</li>
+                  ))}
+                </ul>
+              </dd>
+            </div>
+          ))
+        }
+      </dl>
+    </SectionHeading>
+
+    <SectionHeading sheet="05" title="Education" id="education">
+      <article class="education">
+        <div class="education__meta">
+          <p class="mono-label">Aug 2021 — Expected 2026</p>
+        </div>
+        <div>
+          <h3 class="education__degree">B.S. in Software Engineering</h3>
+          <p class="education__school">Universidad Autónoma de Ciudad Juárez (UACJ)</p>
+          <p class="education__note">
+            Thesis: a financial risk compliance engine built with Python, FastAPI and RAG —
+            see Selected projects.
+          </p>
+        </div>
+      </article>
+    </SectionHeading>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(20rem, 100%), 1fr));
+    gap: 1.5rem;
+  }
+
+  .skills-grid {
+    display: grid;
+    gap: 2rem;
+    margin: 0;
+  }
+
+  .skills-group {
+    display: grid;
+    grid-template-columns: 14rem 1fr;
+    gap: 1rem;
+    align-items: start;
+  }
+
+  .skills-label {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+  }
+
+  .skills-code {
+    border: 1px solid var(--line-strong);
+    padding: 0.15rem 0.45rem;
+    color: var(--accent);
+  }
+
+  .skills-items {
+    margin: 0;
+  }
+
+  .skills-items ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .education {
+    display: grid;
+    grid-template-columns: 14rem 1fr;
+    gap: 1.5rem;
+  }
+
+  .education__degree {
+    font-size: var(--text-lg);
+  }
+
+  .education__school {
+    margin-top: 0.4rem;
+    font-weight: 500;
+    color: var(--accent);
+  }
+
+  .education__note {
+    margin-top: 1rem;
+    color: var(--chalk);
+    max-width: 60ch;
+  }
+
+  @media (max-width: 44rem) {
+    .education {
+      grid-template-columns: 1fr;
+      gap: 0.75rem;
+    }
+
+    .skills-group {
+      grid-template-columns: 1fr;
+      gap: 0.75rem;
+    }
+  }
+</style>

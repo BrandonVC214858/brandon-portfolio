@@ -1,0 +1,129 @@
+---
+import { PROFILE } from '../site.config';
+
+/**
+ * Signature element: the hero is composed like the title block of an
+ * engineering drawing — name as the drawing title, with a stamped
+ * field grid for discipline, location and status.
+ */
+const fields = [
+  { label: 'Discipline', value: 'Software Engineering' },
+  { label: 'Focus', value: PROFILE.focus },
+  { label: 'Location', value: PROFILE.location },
+  { label: 'Status', value: PROFILE.availability },
+];
+---
+
+<section class="hero" id="top">
+  <div class="container">
+    <p class="mono-label hero__eyebrow">Portfolio · Sheet 01 — Title</p>
+    <h1 class="hero__name">
+      Brandon<br />Venegas <span class="hero__accent">Cervantes</span>
+    </h1>
+    <p class="hero__summary">{PROFILE.summary}</p>
+
+    <dl class="hero__block" aria-label="Profile details">
+      {
+        fields.map((field) => (
+          <div class="hero__cell">
+            <dt class="mono-label">{field.label}</dt>
+            <dd class="hero__value">{field.value}</dd>
+          </div>
+        ))
+      }
+    </dl>
+
+    <div class="hero__actions">
+      <a class="hero__cta" href={`mailto:${PROFILE.email}`}>Get in touch</a>
+      <a class="hero__secondary" href={PROFILE.github} rel="noopener noreferrer" target="_blank">
+        GitHub ↗
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    padding-block: var(--space-section);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .hero__eyebrow {
+    margin-bottom: 1.5rem;
+  }
+
+  .hero__name {
+    font-size: var(--text-display);
+    font-weight: 700;
+  }
+
+  .hero__accent {
+    color: var(--accent);
+  }
+
+  .hero__summary {
+    max-width: 52ch;
+    margin-top: 1.75rem;
+    font-size: var(--text-lg);
+    color: var(--chalk);
+  }
+
+  .hero__block {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+    margin: 2.5rem 0 0;
+    border: 1px solid var(--line-strong);
+  }
+
+  .hero__cell {
+    padding: 0.85rem 1rem;
+    border-right: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .hero__value {
+    margin: 0.35rem 0 0;
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    color: var(--paper);
+  }
+
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 2.5rem;
+  }
+
+  .hero__cta {
+    padding: 0.7rem 1.5rem;
+    background: var(--accent);
+    color: var(--accent-ink);
+    font-family: var(--font-mono);
+    font-weight: 500;
+    font-size: var(--text-sm);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .hero__cta:hover {
+    text-decoration: none;
+    filter: brightness(1.08);
+  }
+
+  .hero__secondary {
+    padding: 0.7rem 1.5rem;
+    border: 1px solid var(--line-strong);
+    color: var(--paper);
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .hero__secondary:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    text-decoration: none;
+  }
+</style>
