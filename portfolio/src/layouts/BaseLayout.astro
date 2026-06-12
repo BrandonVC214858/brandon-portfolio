@@ -5,6 +5,7 @@ import '@fontsource/hanken-grotesk/400.css';
 import '@fontsource/hanken-grotesk/600.css';
 import '@fontsource/geist/500.css';
 import '../styles/global.css';
+import VoidAtmosphere from '../components/VoidAtmosphere.astro';
 import { SITE, PROFILE } from '../site.config';
 
 interface Props {
@@ -40,6 +41,9 @@ const jsonLd = {
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Flags JS availability before paint so scroll-reveal styles only
+         hide content when the IntersectionObserver below will run. -->
+    <script is:inline>document.documentElement.classList.add('js');</script>
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta name="author" content={SITE.author} />
@@ -64,7 +68,82 @@ const jsonLd = {
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   </head>
   <body>
+    <VoidAtmosphere />
+    <div class="void-curtain" aria-hidden="true"></div>
     <a class="skip-link" href="#main">Skip to content</a>
     <slot />
+
+    <script>
+      // Reveal-on-scroll: flips [data-reveal] elements once they enter the
+      // viewport; CSS handles the transition (see global.css).
+      const observer = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-revealed');
+              observer.unobserve(entry.target);
+            }
+          }
+        },
+        { rootMargin: '0px 0px -10% 0px', threshold: 0.1 }
+      );
+      document.querySelectorAll('[data-reveal]').forEach((el) => observer.observe(el));
+    </script>
   </body>
 </html>
+
+<style>
+  /* Waking in Hallownest: a void-dark curtain lifts once on load, cut by a
+     single pale dream-nail slash. Ends fully invisible, never blocks input. */
+  .void-curtain {
+    position: fixed;
+    inset: 0;
+    z-index: 99;
+    background: var(--void);
+    pointer-events: none;
+    animation: curtain-lift 0.9s ease 0.2s forwards;
+  }
+
+  .void-curtain::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #ffe9f4, transparent);
+    box-shadow: 0 0 18px rgba(255, 233, 244, 0.8);
+    transform: scaleX(0);
+    animation: nail-slash 0.7s var(--ease-soul) forwards;
+  }
+
+  @keyframes curtain-lift {
+    to {
+      opacity: 0;
+      visibility: hidden;
+    }
+  }
+
+  @keyframes nail-slash {
+    0% {
+      transform: scaleX(0);
+      opacity: 1;
+    }
+
+    60% {
+      transform: scaleX(1);
+      opacity: 1;
+    }
+
+    100% {
+      transform: scaleX(1);
+      opacity: 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .void-curtain {
+      display: none;
+    }
+  }
+</style>

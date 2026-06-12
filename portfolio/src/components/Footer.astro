@@ -12,7 +12,7 @@ const contacts = [
 
 <footer class="footer" id="contact">
   <div class="container">
-    <div class="footer__panel soul-glow">
+    <div class="footer__panel soul-glow" data-reveal>
       <svg
         class="footer__ornament"
         width="120"
@@ -55,7 +55,7 @@ const contacts = [
     </div>
 
     <p class="footer__legal mono-label">
-      © {year} {PROFILE.name} · Built with Astro
+      © {year} {PROFILE.name} <span class="twinkle" aria-hidden="true">✦</span> Built with Astro
     </p>
   </div>
 </footer>
@@ -67,10 +67,23 @@ const contacts = [
 
   .footer__panel {
     position: relative;
+    /* New stacking context so the mist (z-index: -1) stays inside the panel. */
+    isolation: isolate;
     padding: clamp(3rem, 8vw, 6rem);
     border-radius: var(--radius-2xl);
     background: var(--surface-container);
     overflow: hidden;
+  }
+
+  /* Interior mist drifting through the heart of the void. */
+  .footer__panel::before {
+    content: '';
+    position: absolute;
+    inset: -20%;
+    z-index: -1;
+    background: radial-gradient(ellipse 60% 50% at 30% 80%, var(--glow-soft), transparent 70%);
+    animation: footer-mist 90s ease-in-out infinite alternate;
+    pointer-events: none;
   }
 
   /* Decorative envelope emerging from the mist */
@@ -81,6 +94,12 @@ const contacts = [
     color: var(--primary);
     opacity: 0.1;
     pointer-events: none;
+    animation: floating 8s ease-in-out infinite;
+    transition: opacity 0.4s;
+  }
+
+  .footer__panel:hover .footer__ornament {
+    opacity: 0.18;
   }
 
   .footer__title {
@@ -108,11 +127,33 @@ const contacts = [
   }
 
   .footer__link {
+    position: relative;
+    width: fit-content;
     font-family: var(--font-label);
     font-size: var(--text-label);
     color: var(--ink);
     overflow-wrap: anywhere;
     transition: color 0.3s;
+  }
+
+  /* Dream-nail underline: a pale cut drawn left to right. */
+  .footer__link::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -0.25rem;
+    height: 1px;
+    background: var(--primary);
+    box-shadow: 0 0 8px var(--glow-strong);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s var(--ease-soul);
+  }
+
+  .footer__link:hover::after,
+  .footer__link:focus-visible::after {
+    transform: scaleX(1);
   }
 
   .footer__link:hover {
@@ -124,5 +165,15 @@ const contacts = [
     margin-top: 3rem;
     color: var(--outline);
     text-align: center;
+  }
+
+  @keyframes footer-mist {
+    from {
+      transform: translateX(-6%);
+    }
+
+    to {
+      transform: translateX(6%);
+    }
   }
 </style>

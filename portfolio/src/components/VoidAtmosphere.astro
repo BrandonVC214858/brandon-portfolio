@@ -1,0 +1,146 @@
+---
+/**
+ * Site-wide Hallownest atmosphere: rising soul particles, drifting mist and a
+ * cavern vignette. Pure CSS — each particle field is a single element whose
+ * "particles" are box-shadows generated at build time, animated with a lone
+ * GPU-composited translateY. Zero client JavaScript.
+ */
+
+/** Deterministic pseudo-random in [0, 1) so builds stay reproducible. */
+const rand = (seed: number) => {
+  const x = Math.sin(seed * 127.1 + 311.7) * 43758.5453;
+  return x - Math.floor(x);
+};
+
+/**
+ * Builds a box-shadow particle field across 0–100vh, duplicated at +100vh so
+ * the `particles-rise` keyframe (translateY(-100vh)) loops seamlessly.
+ */
+const particleField = (count: number, seed: number, colors: string[]) =>
+  Array.from({ length: count }, (_, i) => {
+    const x = (rand(seed + i * 2) * 100).toFixed(1);
+    const y = (rand(seed + i * 2 + 1) * 100).toFixed(1);
+    const color = colors[i % colors.length];
+    return `${x}vw ${y}vh 6px 1px ${color}, ${x}vw ${Number(y) + 100}vh 6px 1px ${color}`;
+  }).join(', ');
+
+const soulField = particleField(24, 1, ['rgba(206, 189, 255, 0.55)']);
+const sporeField = particleField(14, 97, [
+  'rgba(206, 189, 255, 0.35)',
+  'rgba(68, 226, 205, 0.3)',
+]);
+---
+
+<div class="atmosphere" aria-hidden="true">
+  <div class="atmosphere__mist"></div>
+  <div
+    class="atmosphere__particles atmosphere__particles--soul"
+    style={`box-shadow: ${soulField}`}
+  >
+  </div>
+  <div
+    class="atmosphere__particles atmosphere__particles--spores"
+    style={`box-shadow: ${sporeField}`}
+  >
+  </div>
+  <div class="atmosphere__vignette"></div>
+</div>
+
+<style>
+  .atmosphere {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  /* The host dot is invisible (no background); only its shadows render. */
+  .atmosphere__particles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 2px;
+    height: 2px;
+    border-radius: 50%;
+    will-change: transform;
+    animation: particles-rise 90s linear infinite;
+  }
+
+  .atmosphere__particles--spores {
+    width: 3px;
+    height: 3px;
+    animation-duration: 55s;
+  }
+
+  .atmosphere__mist {
+    position: absolute;
+    inset: 0;
+  }
+
+  /* Softness comes from the gradients themselves — never filter: blur(),
+     which would repaint on every frame. */
+  .atmosphere__mist::before,
+  .atmosphere__mist::after {
+    content: '';
+    position: absolute;
+    width: 160vw;
+    height: 60vh;
+    border-radius: 50%;
+    will-change: transform;
+  }
+
+  .atmosphere__mist::before {
+    left: -30vw;
+    bottom: -20vh;
+    background: radial-gradient(ellipse closest-side, var(--glow-soft), transparent 70%);
+    animation: mist-drift 120s ease-in-out infinite alternate;
+  }
+
+  .atmosphere__mist::after {
+    right: -40vw;
+    top: -15vh;
+    background: radial-gradient(ellipse closest-side, rgba(68, 226, 205, 0.05), transparent 70%);
+    animation: mist-drift 150s ease-in-out infinite alternate-reverse;
+  }
+
+  .atmosphere__vignette {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center, transparent 55%, rgba(5, 8, 12, 0.55) 100%);
+  }
+
+  @keyframes particles-rise {
+    to {
+      transform: translateY(-100vh);
+    }
+  }
+
+  @keyframes mist-drift {
+    from {
+      transform: translateX(-4%);
+    }
+
+    to {
+      transform: translateX(4%);
+    }
+  }
+
+  @media (max-width: 48rem) {
+    .atmosphere__particles--soul {
+      opacity: 0.6;
+    }
+
+    .atmosphere__particles--spores {
+      display: none;
+    }
+  }
+
+  /* Frozen particles read as dirt on the screen — remove them entirely. */
+  @media (prefers-reduced-motion: reduce) {
+    .atmosphere__particles,
+    .atmosphere__mist {
+      display: none;
+    }
+  }
+</style>

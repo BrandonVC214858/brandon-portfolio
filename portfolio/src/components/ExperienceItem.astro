@@ -3,12 +3,15 @@ import type { CollectionEntry } from 'astro:content';
 
 interface Props {
   entry: CollectionEntry<'experience'>;
+  /** Position in the list; staggers the scroll-reveal delay. */
+  index?: number;
 }
 
-const { company, role, mode, start, end, sector, bullets, stack } = Astro.props.entry.data;
+const { entry, index = 0 } = Astro.props;
+const { company, role, mode, start, end, sector, bullets, stack } = entry.data;
 ---
 
-<article class="job">
+<article class="job" data-reveal style={`--reveal-delay: ${index * 100}ms`}>
   <div class="job__meta">
     <p class="mono-label">{start} — {end}</p>
     <p class="mono-label">{mode} · {sector}</p>
@@ -27,6 +30,7 @@ const { company, role, mode, start, end, sector, bullets, stack } = Astro.props.
 
 <style>
   .job {
+    position: relative;
     display: grid;
     grid-template-columns: 14rem 1fr;
     gap: 1.5rem;
@@ -35,6 +39,67 @@ const { company, role, mode, start, end, sector, bullets, stack } = Astro.props.
 
   .job + .job {
     border-top: 1px solid var(--bone-border);
+  }
+
+  /* Traveller's path: each job draws its own segment of the timeline plus a
+     bench marker, 2rem into the padding added by .experience-list. */
+  @media (min-width: 44rem) {
+    .job::before {
+      content: '';
+      position: absolute;
+      left: -2rem;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      background: var(--outline-variant);
+    }
+
+    .job:last-child::before {
+      background: linear-gradient(to bottom, var(--outline-variant) 50%, transparent);
+    }
+
+    .job::after {
+      content: '';
+      position: absolute;
+      left: -2rem;
+      top: 3.4rem;
+      width: 7px;
+      height: 7px;
+      transform: translateX(-50%) rotate(45deg);
+      background: var(--surface);
+      border: 1px solid var(--primary);
+      transition:
+        background-color 0.3s,
+        box-shadow 0.3s;
+    }
+
+    .job:hover::after {
+      background: var(--primary);
+      box-shadow: 0 0 12px var(--glow-strong);
+    }
+  }
+
+  .job__body {
+    position: relative;
+  }
+
+  /* Nail strike: a glowing slash drawn top-down along the body on hover. */
+  .job__body::before {
+    content: '';
+    position: absolute;
+    left: -0.85rem;
+    top: 0.25rem;
+    bottom: 0.25rem;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--primary), transparent);
+    box-shadow: 0 0 8px var(--glow);
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform 0.35s var(--ease-soul);
+  }
+
+  .job:hover .job__body::before {
+    transform: scaleY(1);
   }
 
   .job__meta {

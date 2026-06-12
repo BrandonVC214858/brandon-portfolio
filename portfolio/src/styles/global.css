@@ -21,6 +21,12 @@
   --bone-border-strong: rgba(226, 232, 240, 0.15);
   --glow: rgba(206, 189, 255, 0.15);
   --glow-strong: rgba(206, 189, 255, 0.3);
+  --glow-soft: rgba(206, 189, 255, 0.08);
+  --glow-teal: rgba(68, 226, 205, 0.25);
+
+  /* Motion */
+  --ease-soul: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-reveal: 0.7s;
 
   /* Type */
   --font-display: 'EB Garamond', Georgia, serif;
@@ -69,6 +75,13 @@ body {
   font-size: var(--text-body);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
+}
+
+/* Page content sits above the fixed atmosphere layers (z-index: 0). */
+main,
+footer {
+  position: relative;
+  z-index: 1;
 }
 
 h1,
@@ -133,8 +146,15 @@ ul {
   *::before,
   *::after {
     animation-duration: 0.01ms !important;
+    animation-delay: 0s !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+    transition-delay: 0s !important;
+  }
+
+  html.js [data-reveal] {
+    opacity: 1;
+    transform: none;
   }
 }
 
@@ -186,6 +206,8 @@ ul {
   position: relative;
   height: 1px;
   background: linear-gradient(90deg, transparent, rgba(226, 232, 240, 0.2), transparent);
+  transform-origin: left;
+  transition: transform 0.9s var(--ease-soul) 0.2s;
 }
 
 .artifact-divider::after {
@@ -197,6 +219,51 @@ ul {
   color: rgba(206, 189, 255, 0.5);
   font-size: 0.75rem;
   line-height: 1;
+  animation: twinkle 5s ease-in-out infinite;
+}
+
+/* Motion — Hollow Knight atmosphere -------------------------------------- */
+
+/* Scroll reveal: content is hidden only when JS is available (html.js),
+   so crawlers and no-JS visitors always see the full page. */
+html.js [data-reveal] {
+  opacity: 0;
+  transform: translateY(18px);
+}
+
+html.js [data-reveal].is-revealed {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity var(--dur-reveal) var(--ease-soul),
+    transform var(--dur-reveal) var(--ease-soul);
+  transition-delay: var(--reveal-delay, 0s);
+}
+
+/* Dividers inside a reveal target draw themselves in once revealed. */
+html.js [data-reveal]:not(.is-revealed) .artifact-divider {
+  transform: scaleX(0);
+}
+
+/* Soul pulse: the shadow is pre-painted on a pseudo-element and only its
+   opacity animates, so the pulse composites on the GPU without repaints. */
+.soul-pulse {
+  position: relative;
+}
+
+.soul-pulse::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  box-shadow: 0 0 24px var(--glow-strong);
+  opacity: 0;
+  pointer-events: none;
+  animation: soul-pulse 5s ease-in-out infinite;
+}
+
+.twinkle {
+  animation: twinkle 4s ease-in-out infinite;
 }
 
 @keyframes floating {
@@ -218,5 +285,34 @@ ul {
 
   50% {
     transform: translateY(8px);
+  }
+}
+
+@keyframes soul-pulse {
+  50% {
+    opacity: 0.7;
+  }
+}
+
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 0.35;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
   }
 }

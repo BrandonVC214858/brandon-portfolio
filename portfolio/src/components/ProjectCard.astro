@@ -10,9 +10,15 @@ interface Props {
 const { entry, index = 0 } = Astro.props;
 const { name, role, description, highlights, stack, link } = entry.data;
 const artShift = `${(index * 30) % 90}%`;
+/* Desynchronizes the relic-glow pulse between sibling cards. */
+const pulseDelay = `${index * -2300}ms`;
 ---
 
-<article class="project soul-glow" style={`--art-shift: ${artShift}`}>
+<article
+  class="project soul-glow"
+  style={`--art-shift: ${artShift}; --pulse-delay: ${pulseDelay}; --reveal-delay: ${index * 90}ms`}
+  data-reveal
+>
   <div class="project__art" aria-hidden="true"></div>
   <div class="project__body">
     <p class="mono-label">{role}</p>
@@ -20,7 +26,7 @@ const artShift = `${(index * 30) % 90}%`;
       {
         link ? (
           <a href={link} rel="noopener noreferrer" target="_blank">
-            {name} ↗
+            {name} <span class="project__arrow">↗</span>
           </a>
         ) : (
           name
@@ -39,6 +45,7 @@ const artShift = `${(index * 30) % 90}%`;
 
 <style>
   .project {
+    position: relative;
     display: flex;
     flex-direction: column;
     border-radius: var(--radius-xl);
@@ -46,7 +53,43 @@ const artShift = `${(index * 30) % 90}%`;
     overflow: hidden;
   }
 
+  /* Ornamental corner brackets, like the relic frames in Hallownest menus. */
+  .project::before,
+  .project::after {
+    content: '';
+    position: absolute;
+    width: 1.25rem;
+    height: 1.25rem;
+    border: 0 solid var(--bone-border-strong);
+    pointer-events: none;
+    z-index: 1;
+    transition:
+      border-color 0.4s,
+      transform 0.4s var(--ease-soul);
+  }
+
+  .project::before {
+    top: 0.6rem;
+    left: 0.6rem;
+    border-top-width: 1px;
+    border-left-width: 1px;
+  }
+
+  .project::after {
+    bottom: 0.6rem;
+    right: 0.6rem;
+    border-bottom-width: 1px;
+    border-right-width: 1px;
+  }
+
+  .project:hover::before,
+  .project:hover::after {
+    border-color: rgba(206, 189, 255, 0.5);
+    transform: scale(1.1);
+  }
+
   .project__art {
+    position: relative;
     height: 9rem;
     flex-shrink: 0;
     background:
@@ -62,6 +105,22 @@ const artShift = `${(index * 30) % 90}%`;
       ),
       var(--surface-lowest);
     border-bottom: 1px solid var(--bone-border);
+    transition: transform 0.6s var(--ease-soul);
+  }
+
+  /* Relic glow: a slow soul pulse breathing inside the art panel. */
+  .project__art::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 70% 80% at 50% 110%, var(--glow-teal), transparent 65%);
+    opacity: 0;
+    animation: soul-pulse 7s ease-in-out infinite;
+    animation-delay: var(--pulse-delay, 0s);
+  }
+
+  .project:hover .project__art {
+    transform: scale(1.05);
   }
 
   .project__body {
@@ -83,6 +142,15 @@ const artShift = `${(index * 30) % 90}%`;
   .project__name a:hover {
     color: var(--primary);
     text-decoration: none;
+  }
+
+  .project__arrow {
+    display: inline-block;
+    transition: transform 0.3s var(--ease-soul);
+  }
+
+  .project__name a:hover .project__arrow {
+    transform: translate(0.15em, -0.15em);
   }
 
   .project__description {

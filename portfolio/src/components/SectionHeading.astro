@@ -13,8 +13,8 @@ const { index, title, id } = Astro.props;
 
 <section class="section" id={id}>
   <div class="container">
-    <header class="section__head">
-      <p class="mono-label">✦ Entry {index}</p>
+    <header class="section__head" data-reveal>
+      <p class="mono-label"><span class="twinkle" aria-hidden="true">✦</span> Entry {index}</p>
       <h2 class="section__title">{title}</h2>
       <div class="artifact-divider section__divider" aria-hidden="true"></div>
     </header>
@@ -25,6 +25,9 @@ const { index, title, id } = Astro.props;
 <style>
   .section {
     padding-block: var(--space-section);
+    /* Skip rendering off-screen sections; the estimate keeps anchors stable. */
+    content-visibility: auto;
+    contain-intrinsic-size: auto 600px;
   }
 
   .section__head {

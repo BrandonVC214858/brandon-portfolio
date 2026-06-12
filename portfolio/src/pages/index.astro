@@ -22,8 +22,8 @@ const projects = (await getCollection('projects')).sort(byOrder);
     <Hero />
 
     <SectionHeading index="02" title="Experience" id="experience">
-      <div>
-        {experience.map((entry) => <ExperienceItem entry={entry} />)}
+      <div class="experience-list">
+        {experience.map((entry, i) => <ExperienceItem entry={entry} index={i} />)}
       </div>
     </SectionHeading>
 
@@ -36,8 +36,8 @@ const projects = (await getCollection('projects')).sort(byOrder);
     <SectionHeading index="04" title="Skills" id="skills">
       <dl class="skills-grid">
         {
-          skillGroups.map((group) => (
-            <div class="skills-group soul-glow">
+          skillGroups.map((group, i) => (
+            <div class="skills-group soul-glow" data-reveal style={`--reveal-delay: ${i * 90}ms`}>
               <dt class="skills-label mono-label">{group.label}</dt>
               <dd class="skills-items">
                 <ul>
@@ -53,8 +53,8 @@ const projects = (await getCollection('projects')).sort(byOrder);
     </SectionHeading>
 
     <SectionHeading index="05" title="Education" id="education">
-      <article class="education">
-        <div class="education__dot" aria-hidden="true"></div>
+      <article class="education" data-reveal>
+        <div class="education__dot soul-pulse" aria-hidden="true"></div>
         <p class="mono-label education__dates">Aug 2021 — Expected 2026</p>
         <h3 class="education__degree">B.S. in Software Engineering</h3>
         <p class="education__school">Universidad Autónoma de Ciudad Juárez (UACJ)</p>
@@ -69,6 +69,14 @@ const projects = (await getCollection('projects')).sort(byOrder);
 </BaseLayout>
 
 <style>
+  /* Makes room for the traveller's-path timeline drawn by each job item
+     (see ExperienceItem.astro — markers sit 2rem left of the job edge). */
+  @media (min-width: 44rem) {
+    .experience-list {
+      padding-left: 2.25rem;
+    }
+  }
+
   .projects-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(20rem, 100%), 1fr));
@@ -83,13 +91,38 @@ const projects = (await getCollection('projects')).sort(byOrder);
   }
 
   .skills-group {
+    position: relative;
     padding: 1.5rem;
     border-radius: var(--radius-lg);
     background: var(--surface-container);
   }
 
+  /* Charm notch: the small diamond socket charms clip into in Hollow Knight.
+     It lights up when the group is "equipped" (hovered). */
+  .skills-group::before {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: 50%;
+    width: 9px;
+    height: 9px;
+    transform: translateX(-50%) rotate(45deg);
+    background: var(--surface);
+    border: 1px solid var(--secondary);
+    animation: twinkle 6s ease-in-out infinite;
+    transition:
+      background-color 0.3s,
+      box-shadow 0.3s;
+  }
+
+  .skills-group:hover::before {
+    background: var(--secondary);
+    box-shadow: 0 0 12px var(--glow-teal);
+  }
+
   .skills-label {
     color: var(--secondary);
+    text-shadow: 0 0 14px var(--glow-teal);
   }
 
   .skills-items {
@@ -100,6 +133,17 @@ const projects = (await getCollection('projects')).sort(byOrder);
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
+  }
+
+  .skills-items .tag {
+    transition:
+      border-color 0.3s,
+      color 0.3s;
+  }
+
+  .skills-items .tag:hover {
+    border-color: rgba(68, 226, 205, 0.4);
+    color: var(--secondary);
   }
 
   .education {
@@ -118,6 +162,13 @@ const projects = (await getCollection('projects')).sort(byOrder);
     height: 2.5rem;
     width: 1px;
     background: linear-gradient(to bottom, rgba(73, 69, 82, 0.6), transparent);
+    transform-origin: top;
+    transition: transform 0.8s var(--ease-soul) 0.3s;
+  }
+
+  /* The bench lamppost draws itself down once the entry is revealed. */
+  :global(html.js) .education:not(.is-revealed)::before {
+    transform: scaleY(0);
   }
 
   .education__dot {

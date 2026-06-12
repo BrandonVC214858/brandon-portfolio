@@ -19,7 +19,27 @@
       "Bash(echo \"exit: $?\")",
       "Bash(npm install *)",
       "Bash(npm audit *)",
-      "Bash(npm ls *)"
+      "Bash(npm ls *)",
+      "Bash(npx astro *)",
+      "Bash(grep -o 'atmosphere__particles[^>]\\\\{0,120\\\\}' index.html)",
+      "Bash(node -e \"console.log\\(require.resolve\\('playwright'\\)\\)\")",
+      "Bash(node -e \"console.log\\(require.resolve\\('playwright-core'\\)\\)\")",
+      "Read(//home/drachenbc/**)",
+      "Bash(node hk-shots.mjs)",
+      "Bash(node -e ' *)",
+      "Bash(pkill -f \"http.server 4322\")",
+      "Bash(pkill -f \"serve dist\")",
+      "Bash(rm -rf /tmp/node_modules /tmp/package*.json /tmp/hk-shots.mjs)",
+      "Bash(pkill -9 -f \"http.server 4322\")",
+      "Bash(pkill -9 -f \"serve.*4322\")",
+      "Bash(pkill -9 -f \"node.*serve dist\")",
+      "Bash(curl -s -m 2 -o /dev/null -w '%{http_code}\\\\n' http://localhost:4322/)",
+      "Bash(echo \"curl exit: $?\")",
+      "Bash(kill -9 135560 135584 135585)",
+      "Bash(curl -s -m 2 -o /dev/null http://localhost:4322/)"
+    ],
+    "additionalDirectories": [
+      "/tmp"
     ]
   }
 }
