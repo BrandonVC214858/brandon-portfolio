@@ -11,9 +11,18 @@
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.3",
-    "@fontsource-variable/big-shoulders-display": "^5.2.5",
-    "@fontsource/ibm-plex-mono": "^5.2.7",
-    "@fontsource/ibm-plex-sans": "^5.2.8",
+    "@fontsource/eb-garamond": "^5.2.7",
+    "@fontsource/geist": "^5.2.9",
+    "@fontsource/hanken-grotesk": "^5.2.8",
     "astro": "^6.4.6"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.9",
+    "typescript": "^6.0.3"
+  },
+  "overrides": {
+    "yaml-language-server": {
+      "yaml": "^2.9.0"
+    }
   }
 }

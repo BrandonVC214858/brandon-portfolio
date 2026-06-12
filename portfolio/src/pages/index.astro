@@ -21,27 +21,24 @@ const projects = (await getCollection('projects')).sort(byOrder);
   <main id="main">
     <Hero />
 
-    <SectionHeading sheet="02" title="Experience" id="experience">
+    <SectionHeading index="02" title="Experience" id="experience">
       <div>
         {experience.map((entry) => <ExperienceItem entry={entry} />)}
       </div>
     </SectionHeading>
 
-    <SectionHeading sheet="03" title="Selected projects" id="projects">
+    <SectionHeading index="03" title="Selected projects" id="projects">
       <div class="projects-grid">
-        {projects.map((entry) => <ProjectCard entry={entry} />)}
+        {projects.map((entry, i) => <ProjectCard entry={entry} index={i} />)}
       </div>
     </SectionHeading>
 
-    <SectionHeading sheet="04" title="Skills" id="skills">
+    <SectionHeading index="04" title="Skills" id="skills">
       <dl class="skills-grid">
         {
           skillGroups.map((group) => (
-            <div class="skills-group">
-              <dt class="skills-label">
-                <span class="skills-code mono-label">{group.code}</span>
-                {group.label}
-              </dt>
+            <div class="skills-group soul-glow">
+              <dt class="skills-label mono-label">{group.label}</dt>
               <dd class="skills-items">
                 <ul>
                   {group.items.map((item) => (
@@ -55,19 +52,16 @@ const projects = (await getCollection('projects')).sort(byOrder);
       </dl>
     </SectionHeading>
 
-    <SectionHeading sheet="05" title="Education" id="education">
+    <SectionHeading index="05" title="Education" id="education">
       <article class="education">
-        <div class="education__meta">
-          <p class="mono-label">Aug 2021 — Expected 2026</p>
-        </div>
-        <div>
-          <h3 class="education__degree">B.S. in Software Engineering</h3>
-          <p class="education__school">Universidad Autónoma de Ciudad Juárez (UACJ)</p>
-          <p class="education__note">
-            Thesis: a financial risk compliance engine built with Python, FastAPI and RAG —
-            see Selected projects.
-          </p>
-        </div>
+        <div class="education__dot" aria-hidden="true"></div>
+        <p class="mono-label education__dates">Aug 2021 — Expected 2026</p>
+        <h3 class="education__degree">B.S. in Software Engineering</h3>
+        <p class="education__school">Universidad Autónoma de Ciudad Juárez (UACJ)</p>
+        <p class="education__note">
+          Thesis: a financial risk compliance engine built with Python, FastAPI and RAG —
+          see Selected projects.
+        </p>
       </article>
     </SectionHeading>
   </main>
@@ -78,40 +72,28 @@ const projects = (await getCollection('projects')).sort(byOrder);
   .projects-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(20rem, 100%), 1fr));
-    gap: 1.5rem;
+    gap: 2rem;
   }
 
   .skills-grid {
     display: grid;
-    gap: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(min(18rem, 100%), 1fr));
+    gap: 1.5rem;
     margin: 0;
   }
 
   .skills-group {
-    display: grid;
-    grid-template-columns: 14rem 1fr;
-    gap: 1rem;
-    align-items: start;
+    padding: 1.5rem;
+    border-radius: var(--radius-lg);
+    background: var(--surface-container);
   }
 
   .skills-label {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    font-family: var(--font-display);
-    font-size: var(--text-lg);
-    text-transform: uppercase;
-    letter-spacing: 0.02em;
-  }
-
-  .skills-code {
-    border: 1px solid var(--line-strong);
-    padding: 0.15rem 0.45rem;
-    color: var(--accent);
+    color: var(--secondary);
   }
 
   .skills-items {
-    margin: 0;
+    margin: 1rem 0 0;
   }
 
   .skills-items ul {
@@ -121,36 +103,54 @@ const projects = (await getCollection('projects')).sort(byOrder);
   }
 
   .education {
-    display: grid;
-    grid-template-columns: 14rem 1fr;
-    gap: 1.5rem;
+    position: relative;
+    max-width: 42rem;
+    margin-inline: auto;
+    padding-top: 3rem;
+    text-align: center;
+  }
+
+  .education::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 0;
+    height: 2.5rem;
+    width: 1px;
+    background: linear-gradient(to bottom, rgba(73, 69, 82, 0.6), transparent);
+  }
+
+  .education__dot {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%);
+    width: 1.25rem;
+    height: 1.25rem;
+    border-radius: 9999px;
+    background: var(--surface);
+    border: 2px solid var(--primary);
+    box-shadow: 0 0 10px var(--primary);
+    z-index: 1;
+  }
+
+  .education__dates {
+    color: var(--primary);
   }
 
   .education__degree {
-    font-size: var(--text-lg);
+    margin-top: 0.75rem;
+    font-size: var(--text-headline-md);
   }
 
   .education__school {
     margin-top: 0.4rem;
-    font-weight: 500;
-    color: var(--accent);
+    color: var(--ink-muted);
   }
 
   .education__note {
-    margin-top: 1rem;
-    color: var(--chalk);
-    max-width: 60ch;
-  }
-
-  @media (max-width: 44rem) {
-    .education {
-      grid-template-columns: 1fr;
-      gap: 0.75rem;
-    }
-
-    .skills-group {
-      grid-template-columns: 1fr;
-      gap: 0.75rem;
-    }
+    max-width: 50ch;
+    margin: 1rem auto 0;
+    color: var(--ink-muted);
   }
 </style>

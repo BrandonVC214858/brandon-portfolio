@@ -1,37 +1,51 @@
 /* ==========================================================================
-   Design tokens — "Engineering blueprint" system
-   Deep drafting-blue ground, ice-white ink, one drafting-yellow accent.
+   Design tokens — "Pale & Void" system
+   Deep void ground, bone-white ink, ghost-purple primary, soul-teal accent.
    ========================================================================== */
 
 :root {
   /* Color */
-  --ink-950: #081d33;
-  --ink-900: #0b2543;
-  --ink-800: #103050;
-  --paper: #e9f1f7;
-  --chalk: #9ab3c9;
-  --line: rgba(233, 241, 247, 0.14);
-  --line-strong: rgba(233, 241, 247, 0.32);
-  --accent: #ffc53d;
-  --accent-ink: #081d33;
+  --void: #0a0f16;
+  --surface: #141219;
+  --surface-lowest: #0f0d14;
+  --surface-container: #211e25;
+  --surface-high: #2b2930;
+  --ink: #e6e0ea;
+  --ink-muted: #cac4d4;
+  --outline: #948e9d; /* borders & decoration only — not body text */
+  --outline-variant: #494552;
+  --primary: #cebdff;
+  --on-primary: #381385;
+  --secondary: #44e2cd;
+  --bone-border: rgba(226, 232, 240, 0.1);
+  --bone-border-strong: rgba(226, 232, 240, 0.15);
+  --glow: rgba(206, 189, 255, 0.15);
+  --glow-strong: rgba(206, 189, 255, 0.3);
 
   /* Type */
-  --font-display: 'Big Shoulders Display Variable', 'Arial Narrow', sans-serif;
-  --font-body: 'IBM Plex Sans', system-ui, sans-serif;
-  --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+  --font-display: 'EB Garamond', Georgia, serif;
+  --font-body: 'Hanken Grotesk', system-ui, sans-serif;
+  --font-label: 'Geist', ui-monospace, system-ui, sans-serif;
 
   /* Scale (fluid) */
   --text-xs: 0.75rem;
-  --text-sm: 0.875rem;
-  --text-base: clamp(1rem, 0.95rem + 0.2vw, 1.0625rem);
-  --text-lg: clamp(1.125rem, 1rem + 0.5vw, 1.375rem);
-  --text-xl: clamp(1.5rem, 1.2rem + 1.2vw, 2.25rem);
-  --text-display: clamp(3rem, 1.8rem + 7vw, 7.5rem);
+  --text-label: 0.875rem;
+  --text-body: 1rem;
+  --text-body-lg: 1.125rem;
+  --text-headline-md: clamp(1.25rem, 1.1rem + 0.8vw, 1.5rem);
+  --text-headline-lg: clamp(1.5rem, 1.3rem + 1vw, 2rem);
+  --text-display: clamp(2.5rem, 1.8rem + 3.5vw, 4rem);
+
+  /* Shape */
+  --radius-sm: 0.25rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+  --radius-2xl: 1.5rem;
 
   /* Layout */
-  --container: 68rem;
-  --space-section: clamp(4rem, 3rem + 5vw, 8rem);
-  --gutter: clamp(1.25rem, 4vw, 2.5rem);
+  --container: 75rem;
+  --space-section: clamp(5rem, 4rem + 4vw, 8rem);
+  --gutter: clamp(1rem, 4vw, 4rem);
 }
 
 /* Base ------------------------------------------------------------------ */
@@ -49,16 +63,11 @@ html {
 
 body {
   margin: 0;
-  background-color: var(--ink-950);
-  /* Subtle drafting grid over the page ground */
-  background-image:
-    linear-gradient(var(--line) 1px, transparent 1px),
-    linear-gradient(90deg, var(--line) 1px, transparent 1px);
-  background-size: 64px 64px;
-  color: var(--paper);
+  background-color: var(--void);
+  color: var(--ink);
   font-family: var(--font-body);
-  font-size: var(--text-base);
-  line-height: 1.65;
+  font-size: var(--text-body);
+  line-height: 1.6;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -67,10 +76,9 @@ h2,
 h3 {
   margin: 0;
   font-family: var(--font-display);
-  font-weight: 600;
-  line-height: 1.05;
-  letter-spacing: 0.01em;
-  text-transform: uppercase;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
 }
 
 p {
@@ -78,7 +86,7 @@ p {
 }
 
 a {
-  color: var(--accent);
+  color: var(--primary);
   text-decoration: none;
 }
 
@@ -96,7 +104,7 @@ ul {
 /* Accessibility ---------------------------------------------------------- */
 
 :focus-visible {
-  outline: 2px solid var(--accent);
+  outline: 2px solid var(--primary);
   outline-offset: 3px;
 }
 
@@ -106,10 +114,10 @@ ul {
   left: 1rem;
   z-index: 100;
   padding: 0.5rem 1rem;
-  background: var(--accent);
-  color: var(--accent-ink);
-  font-family: var(--font-mono);
-  font-size: var(--text-sm);
+  background: var(--primary);
+  color: var(--on-primary);
+  font-family: var(--font-label);
+  font-size: var(--text-label);
 }
 
 .skip-link:focus {
@@ -138,20 +146,77 @@ ul {
 }
 
 .mono-label {
-  font-family: var(--font-mono);
+  font-family: var(--font-label);
   font-size: var(--text-xs);
-  letter-spacing: 0.12em;
+  font-weight: 500;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--chalk);
+  color: var(--ink-muted);
 }
 
 .tag {
   display: inline-block;
-  padding: 0.2rem 0.55rem;
-  border: 1px solid var(--line-strong);
-  font-family: var(--font-mono);
+  padding: 0.25rem 0.75rem;
+  border: 1px solid var(--bone-border-strong);
+  border-radius: var(--radius-sm);
+  background: rgba(255, 255, 255, 0.03);
+  font-family: var(--font-label);
   font-size: var(--text-xs);
-  letter-spacing: 0.04em;
-  color: var(--chalk);
+  letter-spacing: 0.05em;
+  color: var(--ink-muted);
   white-space: nowrap;
+}
+
+.soul-glow {
+  border: 1px solid var(--bone-border);
+  box-shadow: 0 0 20px var(--glow);
+  transition:
+    box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+    border-color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.soul-glow:hover {
+  box-shadow: 0 0 30px var(--glow-strong);
+  border-color: rgba(206, 189, 255, 0.4);
+  transform: translateY(-4px);
+}
+
+.artifact-divider {
+  position: relative;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(226, 232, 240, 0.2), transparent);
+}
+
+.artifact-divider::after {
+  content: '✦';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  color: rgba(206, 189, 255, 0.5);
+  font-size: 0.75rem;
+  line-height: 1;
+}
+
+@keyframes floating {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(8px);
+  }
 }

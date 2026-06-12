@@ -1,0 +1,25 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run *)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:4322/)",
+      "Read(//home/drachenbc/.cache/**)",
+      "Bash(npx -y playwright --version)",
+      "Bash(npx -y playwright install chromium --with-deps --only-shell)",
+      "Bash(npx -y playwright install chromium)",
+      "Read(//tmp/**)",
+      "Bash(node /tmp/shot.mjs)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://localhost:4322/)",
+      "Bash(pkill -f \"astro/dist/cli\")",
+      "Bash(pkill -f \"vite preview\")",
+      "Bash(curl -s -o /dev/null -w \"preview: %{http_code}\\\\n\" --max-time 3 http://localhost:4322/)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" --max-time 3 http://localhost:4322/)",
+      "Bash(pkill -O 1 -f \"astro preview\")",
+      "Bash(pkill -O 1 -f \"node.*astro\")",
+      "Bash(echo \"exit: $?\")",
+      "Bash(npm install *)",
+      "Bash(npm audit *)",
+      "Bash(npm ls *)"
+    ]
+  }
+}

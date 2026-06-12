@@ -1,21 +1,22 @@
 ---
 interface Props {
-  /** Sheet number rendered in the annotation, e.g. "02". */
-  sheet: string;
+  /** Codex entry number rendered in the eyebrow, e.g. "02". */
+  index: string;
   /** Section title. */
   title: string;
   /** Anchor id for in-page navigation. */
   id: string;
 }
 
-const { sheet, title, id } = Astro.props;
+const { index, title, id } = Astro.props;
 ---
 
 <section class="section" id={id}>
   <div class="container">
     <header class="section__head">
-      <p class="mono-label">Sheet {sheet}</p>
+      <p class="mono-label">✦ Entry {index}</p>
       <h2 class="section__title">{title}</h2>
+      <div class="artifact-divider section__divider" aria-hidden="true"></div>
     </header>
     <slot />
   </div>
@@ -24,19 +25,22 @@ const { sheet, title, id } = Astro.props;
 <style>
   .section {
     padding-block: var(--space-section);
-    border-bottom: 1px solid var(--line);
   }
 
   .section__head {
-    display: flex;
-    align-items: baseline;
-    gap: 1.25rem;
-    margin-bottom: clamp(2rem, 5vw, 3.5rem);
-    padding-bottom: 1rem;
-    border-bottom: 1px solid var(--line-strong);
+    margin-bottom: clamp(2.5rem, 5vw, 4rem);
   }
 
   .section__title {
-    font-size: var(--text-xl);
+    margin-top: 0.75rem;
+    font-size: var(--text-headline-lg);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--primary);
+  }
+
+  .section__divider {
+    width: min(16rem, 50%);
+    margin-top: 1.25rem;
   }
 </style>

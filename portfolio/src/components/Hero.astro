@@ -1,129 +1,194 @@
 ---
+import { getImage } from 'astro:assets';
 import { PROFILE } from '../site.config';
+import bgSrc from '../assets/void-bg.png';
 
 /**
- * Signature element: the hero is composed like the title block of an
- * engineering drawing — name as the drawing title, with a stamped
- * field grid for discipline, location and status.
+ * Signature element: the hero is a full-viewport "void" — the name floats
+ * as a pale inscription over a dark atmospheric background that fades
+ * seamlessly into the page ground.
  */
-const fields = [
-  { label: 'Discipline', value: 'Software Engineering' },
-  { label: 'Focus', value: PROFILE.focus },
-  { label: 'Location', value: PROFILE.location },
-  { label: 'Status', value: PROFILE.availability },
-];
+const bgWide = await getImage({ src: bgSrc, format: 'webp', quality: 60 });
+const bgNarrow = await getImage({ src: bgSrc, format: 'webp', quality: 55, width: 768 });
 ---
 
 <section class="hero" id="top">
-  <div class="container">
-    <p class="mono-label hero__eyebrow">Portfolio · Sheet 01 — Title</p>
-    <h1 class="hero__name">
-      Brandon<br />Venegas <span class="hero__accent">Cervantes</span>
-    </h1>
-    <p class="hero__summary">{PROFILE.summary}</p>
+  <picture class="hero__bg" aria-hidden="true">
+    <source media="(max-width: 48rem)" srcset={bgNarrow.src} />
+    <img
+      src={bgWide.src}
+      width={bgWide.attributes.width}
+      height={bgWide.attributes.height}
+      alt=""
+      loading="eager"
+      fetchpriority="high"
+      decoding="async"
+    />
+  </picture>
+  <div class="hero__veil" aria-hidden="true"></div>
 
-    <dl class="hero__block" aria-label="Profile details">
-      {
-        fields.map((field) => (
-          <div class="hero__cell">
-            <dt class="mono-label">{field.label}</dt>
-            <dd class="hero__value">{field.value}</dd>
-          </div>
-        ))
-      }
-    </dl>
+  <div class="container hero__content">
+    <p class="hero__badge mono-label">{PROFILE.availability}</p>
+    <h1 class="hero__name">Brandon Venegas Cervantes</h1>
+    <p class="hero__summary">{PROFILE.summary}</p>
+    <p class="mono-label hero__meta">{PROFILE.location} ✦ {PROFILE.focus}</p>
 
     <div class="hero__actions">
-      <a class="hero__cta" href={`mailto:${PROFILE.email}`}>Get in touch</a>
+      <a class="hero__cta" href={`mailto:${PROFILE.email}`}>
+        <span>Get in touch</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M5 12h14" /><path d="m12 5 7 7-7 7" />
+        </svg>
+      </a>
       <a class="hero__secondary" href={PROFILE.github} rel="noopener noreferrer" target="_blank">
-        GitHub ↗
+        <span>GitHub</span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M7 17 17 7" /><path d="M7 7h10v10" />
+        </svg>
       </a>
     </div>
   </div>
+
+  <svg
+    class="hero__scroll"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    aria-hidden="true"
+  >
+    <path d="m7 6 5 5 5-5" /><path d="m7 13 5 5 5-5" />
+  </svg>
 </section>
 
 <style>
   .hero {
+    position: relative;
+    display: flex;
+    align-items: center;
+    min-height: calc(100svh - 4rem);
     padding-block: var(--space-section);
-    border-bottom: 1px solid var(--line);
+    overflow: hidden;
   }
 
-  .hero__eyebrow {
-    margin-bottom: 1.5rem;
+  .hero__bg,
+  .hero__veil {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+  }
+
+  .hero__bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .hero__veil {
+    background: linear-gradient(to bottom, rgba(10, 15, 22, 0.5), rgba(10, 15, 22, 0.97));
+  }
+
+  .hero__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .hero__badge {
+    padding: 0.4rem 1rem;
+    border: 1px solid var(--bone-border-strong);
+    border-radius: 9999px;
+    background: rgba(255, 255, 255, 0.03);
+    color: var(--primary);
+    animation: floating 6s ease-in-out infinite;
   }
 
   .hero__name {
+    margin-top: 2rem;
     font-size: var(--text-display);
-    font-weight: 700;
-  }
-
-  .hero__accent {
-    color: var(--accent);
+    line-height: 1.1;
   }
 
   .hero__summary {
     max-width: 52ch;
-    margin-top: 1.75rem;
-    font-size: var(--text-lg);
-    color: var(--chalk);
+    margin-top: 1.5rem;
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: var(--text-headline-md);
+    line-height: 1.5;
+    color: var(--ink-muted);
   }
 
-  .hero__block {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
-    margin: 2.5rem 0 0;
-    border: 1px solid var(--line-strong);
-  }
-
-  .hero__cell {
-    padding: 0.85rem 1rem;
-    border-right: 1px solid var(--line);
-    border-bottom: 1px solid var(--line);
-  }
-
-  .hero__value {
-    margin: 0.35rem 0 0;
-    font-family: var(--font-mono);
-    font-size: var(--text-sm);
-    color: var(--paper);
+  .hero__meta {
+    margin-top: 1.5rem;
   }
 
   .hero__actions {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
     gap: 1rem;
-    margin-top: 2.5rem;
+    margin-top: 3rem;
+  }
+
+  .hero__cta,
+  .hero__secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 2rem;
+    border-radius: var(--radius-lg);
+    font-family: var(--font-label);
+    font-size: var(--text-label);
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink);
+    transition:
+      border-color 0.3s,
+      background-color 0.3s;
   }
 
   .hero__cta {
-    padding: 0.7rem 1.5rem;
-    background: var(--accent);
-    color: var(--accent-ink);
-    font-family: var(--font-mono);
-    font-weight: 500;
-    font-size: var(--text-sm);
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-  }
-
-  .hero__cta:hover {
-    text-decoration: none;
-    filter: brightness(1.08);
+    background: var(--surface-high);
+    border: 1px solid rgba(73, 69, 82, 0.5);
   }
 
   .hero__secondary {
-    padding: 0.7rem 1.5rem;
-    border: 1px solid var(--line-strong);
-    color: var(--paper);
-    font-family: var(--font-mono);
-    font-size: var(--text-sm);
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
+    background: transparent;
+    border: 1px solid rgba(73, 69, 82, 0.5);
   }
 
+  .hero__cta svg,
+  .hero__secondary svg {
+    color: var(--primary);
+    transition: transform 0.3s;
+  }
+
+  .hero__cta:hover,
   .hero__secondary:hover {
-    border-color: var(--accent);
-    color: var(--accent);
     text-decoration: none;
+    border-color: rgba(206, 189, 255, 0.5);
+    background-color: rgba(206, 189, 255, 0.05);
+  }
+
+  .hero__cta:hover svg,
+  .hero__secondary:hover svg {
+    transform: translateX(0.25rem);
+  }
+
+  .hero__scroll {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    translate: -50% 0;
+    color: var(--ink);
+    opacity: 0.4;
+    animation: bounce 2s ease-in-out infinite;
   }
 </style>

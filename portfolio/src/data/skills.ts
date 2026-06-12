@@ -4,14 +4,12 @@
  */
 export interface SkillGroup {
   label: string;
-  code: string;
   items: string[];
 }
 
 export const skillGroups: SkillGroup[] = [
   {
     label: 'Frontend',
-    code: 'FE',
     items: [
       'React',
       'TypeScript',
@@ -26,7 +24,6 @@ export const skillGroups: SkillGroup[] = [
   },
   {
     label: 'Backend',
-    code: 'BE',
     items: [
       'Python (FastAPI, Django)',
       'PHP (Laravel)',
@@ -39,7 +36,6 @@ export const skillGroups: SkillGroup[] = [
   },
   {
     label: 'Cloud & DevOps',
-    code: 'OPS',
     items: [
       'AWS (Amplify, EC2, Rekognition)',
       'Cloudflare R2',
@@ -51,7 +47,6 @@ export const skillGroups: SkillGroup[] = [
   },
   {
     label: 'Practices',
-    code: 'PRC',
     items: [
       'Agile / Scrum',
       'Unit testing',
@@ -63,7 +58,6 @@ export const skillGroups: SkillGroup[] = [
   },
   {
     label: 'Languages',
-    code: 'LNG',
     items: ['Spanish (native)', 'English (professional working proficiency)'],
   },
 ];

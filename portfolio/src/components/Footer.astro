@@ -12,29 +12,47 @@ const contacts = [
 
 <footer class="footer" id="contact">
   <div class="container">
-    <p class="mono-label">Sheet 06 — Contact</p>
-    <h2 class="footer__title">Let's build something reliable.</h2>
-    <p class="footer__note">
-      Open to remote frontend and full-stack roles. The fastest way to reach me is email.
-    </p>
+    <div class="footer__panel soul-glow">
+      <svg
+        class="footer__ornament"
+        width="120"
+        height="120"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+      >
+        <rect x="2" y="4" width="20" height="16" rx="2" />
+        <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+      </svg>
 
-    <ul class="footer__contacts">
-      {
-        contacts.map((contact) => (
-          <li class="footer__cell">
-            <span class="mono-label">{contact.label}</span>
-            <a
-              class="footer__link"
-              href={contact.href}
-              rel={contact.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-              target={contact.href.startsWith('http') ? '_blank' : undefined}
-            >
-              {contact.value}
-            </a>
-          </li>
-        ))
-      }
-    </ul>
+      <p class="mono-label">✦ Entry 06 · Contact</p>
+      <h2 class="footer__title">Let's build something reliable.</h2>
+      <p class="footer__note">
+        Open to remote frontend and full-stack roles. The fastest way to reach me is email.
+      </p>
+
+      <ul class="footer__contacts">
+        {
+          contacts.map((contact) => (
+            <li class="footer__cell">
+              <span class="mono-label">{contact.label}</span>
+              <a
+                class="footer__link"
+                href={contact.href}
+                rel={contact.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                target={contact.href.startsWith('http') ? '_blank' : undefined}
+              >
+                {contact.value}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
 
     <p class="footer__legal mono-label">
       © {year} {PROFILE.name} · Built with Astro
@@ -47,46 +65,64 @@ const contacts = [
     padding-block: var(--space-section);
   }
 
+  .footer__panel {
+    position: relative;
+    padding: clamp(3rem, 8vw, 6rem);
+    border-radius: var(--radius-2xl);
+    background: var(--surface-container);
+    overflow: hidden;
+  }
+
+  /* Decorative envelope emerging from the mist */
+  .footer__ornament {
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+    color: var(--primary);
+    opacity: 0.1;
+    pointer-events: none;
+  }
+
   .footer__title {
     margin-top: 1rem;
-    font-size: var(--text-xl);
+    font-size: var(--text-headline-lg);
   }
 
   .footer__note {
     max-width: 48ch;
     margin-top: 1rem;
-    color: var(--chalk);
+    color: var(--ink-muted);
   }
 
   .footer__contacts {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
-    margin-top: 2.5rem;
-    border: 1px solid var(--line-strong);
+    grid-template-columns: repeat(auto-fit, minmax(min(12rem, 100%), 1fr));
+    gap: 1.5rem;
+    margin-top: 3rem;
   }
 
   .footer__cell {
     display: flex;
     flex-direction: column;
     gap: 0.35rem;
-    padding: 1rem 1.1rem;
-    border-right: 1px solid var(--line);
-    border-bottom: 1px solid var(--line);
   }
 
   .footer__link {
-    font-family: var(--font-mono);
-    font-size: var(--text-sm);
-    color: var(--paper);
+    font-family: var(--font-label);
+    font-size: var(--text-label);
+    color: var(--ink);
     overflow-wrap: anywhere;
+    transition: color 0.3s;
   }
 
   .footer__link:hover {
-    color: var(--accent);
+    color: var(--primary);
     text-decoration: none;
   }
 
   .footer__legal {
     margin-top: 3rem;
+    color: var(--outline);
+    text-align: center;
   }
 </style>
