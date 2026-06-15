@@ -15,7 +15,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  BUILD_PATH: './porfolio'
+  BUILD_PATH: './portfolio'
 
 jobs:
   build:
