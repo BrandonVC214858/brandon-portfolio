@@ -9,7 +9,7 @@ export const SITE = {
   author: 'Brandon Venegas Cervantes',
   locale: 'en',
   // Used for canonical URLs, Open Graph and JSON-LD. Keep in sync with astro.config.mjs.
-  url: 'https://brandonvenegas.dev',
+  url: 'https://brandonvc214858.github.io/',
 } as const;
 
 export const PROFILE = {
