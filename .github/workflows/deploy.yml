@@ -2,7 +2,8 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [ main ] # Cambia a 'master' si tu rama principal se llama así
+    # AQUÍ CAMBIAMOS 'main' POR TU RAMA REAL
+    branches: [ main-hollow ] 
 
 permissions:
   contents: read
@@ -14,7 +15,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  BUILD_PATH: './porfolio' # Ruta a tu carpeta del proyecto
+  BUILD_PATH: './porfolio'
 
 jobs:
   build:
