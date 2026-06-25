@@ -8,7 +8,7 @@ interface Props {
 }
 
 const { entry, index = 0 } = Astro.props;
-const { company, role, mode, start, end, sector, bullets, stack } = entry.data;
+const { company, role, mode, start, end, sector, bullets, stack, link } = entry.data;
 ---
 
 <article class="job" data-reveal style={`--reveal-delay: ${index * 100}ms`}>
@@ -18,7 +18,13 @@ const { company, role, mode, start, end, sector, bullets, stack } = entry.data;
   </div>
   <div class="job__body">
     <h3 class="job__role">{role}</h3>
-    <p class="job__company">{company}</p>
+    {link ? (
+      <a href={link} class="job__company" target="_blank" rel="noopener noreferrer">
+        {company} <span class="job__link-arrow">↗</span>
+      </a>
+    ) : (
+      <p class="job__company">{company}</p>
+    )}
     <ul class="job__bullets">
       {bullets.map((bullet) => <li>{bullet}</li>)}
     </ul>
@@ -121,6 +127,25 @@ const { company, role, mode, start, end, sector, bullets, stack } = entry.data;
     margin-top: 0.4rem;
     font-weight: 600;
     color: var(--primary);
+  }
+
+  a.job__company {
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  a.job__company:hover {
+    text-decoration: underline;
+  }
+
+  .job__link-arrow {
+    font-size: 0.8em;
+    transition: transform 0.2s;
+    display: inline-block;
+  }
+
+  a.job__company:hover .job__link-arrow {
+    transform: translate(2px, -2px);
   }
 
   .job__bullets {

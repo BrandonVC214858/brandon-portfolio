@@ -19,6 +19,8 @@ const experience = defineCollection({
     sector: z.string(),
     bullets: z.array(z.string()).min(1),
     stack: z.array(z.string()),
+    /** Optional company website or LinkedIn URL. */
+    link: z.string().url().optional(),
   }),
 });
 

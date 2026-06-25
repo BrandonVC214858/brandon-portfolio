@@ -2,7 +2,7 @@
   {
     "id": "sspm",
     "order": 1,
-    "company": "Municipal Public Security Secretariat (SSPM)",
+    "company": "Secretaria de Seguridad Pública Municipal (SSPM)",
     "role": "Full Stack Developer",
     "mode": "On-site",
     "start": "Jul 2024",
@@ -29,7 +29,8 @@
       "Implemented secure identity verification flows by integrating AWS Face Liveness (Rekognition), delivering an accessible biometric onboarding experience that reduced fraud.",
       "Owned frontend deployment on AWS Amplify with automated CI/CD pipelines, shortening release cycles and keeping platform uptime high."
     ],
-    "stack": ["React", "React Query", "Axios", "TailwindCSS", "AWS Amplify", "AWS Rekognition"]
+    "stack": ["React", "React Query", "Axios", "TailwindCSS", "AWS Amplify", "AWS Rekognition"],
+    "link": "https://www.capitalatufavor.mx/"
   },
   {
     "id": "mateos",
@@ -45,6 +46,7 @@
       "Engineered the server-side architecture and relational database to support transactions, deployed on AWS EC2 with asset storage on Cloudflare R2 to improve page-load performance.",
       "Handled domain registration, DNS provisioning and infrastructure setup through Hostinger to guarantee constant availability and uptime."
     ],
-    "stack": ["JavaScript", "Python (Django)", "MySQL", "AWS EC2", "Cloudflare R2"]
+    "stack": ["JavaScript", "Python (Django)", "MySQL", "AWS EC2", "Cloudflare R2"],
+    "link": "https://floreria-mateos.com/"
   }
 ]
