@@ -13,7 +13,7 @@
       "Automate repetitive data extraction and server administration tasks with Python and PowerShell scripts, removing manual processes and reducing human error.",
       "Collaborate in Agile/Scrum ceremonies with cross-functional teams to coordinate software changes, enforce version-control standards and review code quality."
     ],
-    "stack": ["Python", "PHP", "PostgreSQL", "MySQL", "PowerShell", "Git"]
+    "stack": ["Python", "PHP (Laravel)", "JavaScript", "PostgreSQL", "MySQL", "PowerShell", "Git"]
   },
   {
     "id": "ctf",
@@ -45,6 +45,6 @@
       "Engineered the server-side architecture and relational database to support transactions, deployed on AWS EC2 with asset storage on Cloudflare R2 to improve page-load performance.",
       "Handled domain registration, DNS provisioning and infrastructure setup through Hostinger to guarantee constant availability and uptime."
     ],
-    "stack": ["JavaScript", "PHP (Laravel)", "MySQL", "AWS EC2", "Cloudflare R2"]
+    "stack": ["JavaScript", "Python (Django)", "MySQL", "AWS EC2", "Cloudflare R2"]
   }
 ]

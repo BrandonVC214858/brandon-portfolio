@@ -3,17 +3,17 @@
  * Update values here once — every component reads from this file.
  */
 export const SITE = {
-  title: 'Brandon Venegas Cervantes — Software Engineer',
+  title: 'Brandon Venegas-Cervantes — Software Engineer',
   description:
     'Software Engineer in Ciudad Juárez, MX, building high-performance web applications with React, TypeScript, Python and AWS. Experience in fintech, the public sector and e-commerce.',
-  author: 'Brandon Venegas Cervantes',
+  author: 'Brandon Venegas-Cervantes',
   locale: 'en',
   // Used for canonical URLs, Open Graph and JSON-LD. Keep in sync with astro.config.mjs.
   url: 'https://brandonvc214858.github.io/',
 } as const;
 
 export const PROFILE = {
-  name: 'Brandon Venegas Cervantes',
+  name: 'Brandon Venegas-Cervantes',
   role: 'Software Engineer',
   focus: 'Frontend-leaning full stack',
   location: 'Ciudad Juárez, Chihuahua, MX',
