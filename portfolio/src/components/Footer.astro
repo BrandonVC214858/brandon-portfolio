@@ -12,7 +12,7 @@ const t = useTranslations(lang);
 const year = new Date().getFullYear();
 const contacts = [
   { label: t('contact.email'), value: PROFILE.email, href: `mailto:${PROFILE.email}` },
-  { label: t('contact.phone'), value: PROFILE.phone, href: `tel:${PROFILE.phone.replace(/\s/g, '')}` },
+  { label: t('contact.phone'), value: t('contact.phoneValue'), href: `tel:${t('contact.phoneValue').replace(/\s/g, '')}` },
   { label: t('contact.github'), value: 'BrandonVC214858', href: PROFILE.github },
   { label: t('contact.linkedin'), value: t('contact.linkedinValue'), href: PROFILE.linkedin },
 ];

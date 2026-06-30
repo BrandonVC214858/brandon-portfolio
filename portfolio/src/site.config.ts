@@ -12,7 +12,6 @@ export const SITE = {
 export const PROFILE = {
   name: 'Brandon Venegas-Cervantes',
   email: 'brandon.venegas26@gmail.com',
-  phone: '+52 656 128 1886',
   github: 'https://github.com/BrandonVC214858',
   // TODO: replace with your real LinkedIn profile URL.
   linkedin: 'https://www.linkedin.com/in/brandonbc/',
