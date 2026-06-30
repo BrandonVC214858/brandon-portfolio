@@ -1,16 +1,26 @@
 ---
+import LangToggle from './LangToggle.astro';
+import { useTranslations, type Lang } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
 const links = [
-  { href: '#experience', label: 'Experience' },
-  { href: '#projects', label: 'Projects' },
-  { href: '#skills', label: 'Skills' },
-  { href: '#contact', label: 'Contact' },
+  { href: '#experience', label: t('nav.experience') },
+  { href: '#projects', label: t('nav.projects') },
+  { href: '#skills', label: t('nav.skills') },
+  { href: '#contact', label: t('nav.contact') },
 ];
 ---
 
 <header class="header">
   <div class="container header__inner">
-    <a class="header__mark" href="#top" aria-label="Back to top">BVC</a>
-    <nav aria-label="Main">
+    <a class="header__mark" href="#top" aria-label={t('nav.backToTop')}>BVC</a>
+    <nav aria-label={t('nav.aria')}>
       <ul class="header__nav">
         {
           links.map((link) => (
@@ -23,6 +33,7 @@ const links = [
         }
       </ul>
     </nav>
+    <LangToggle lang={lang} />
   </div>
 </header>
 

@@ -8,7 +8,16 @@ export default defineConfig({
   // Required for sitemap generation and canonical URLs.
   base: '/',
   site: 'https://brandonvc214858.github.io',
-  integrations: [sitemap()],
+  i18n: {
+    locales: ['en', 'es'],
+    defaultLocale: 'en',
+    routing: { prefixDefaultLocale: false }, // en at /, es at /es/
+  },
+  integrations: [
+    sitemap({
+      i18n: { defaultLocale: 'en', locales: { en: 'en-US', es: 'es-MX' } },
+    }),
+  ],
   compressHTML: true,
   build: {
     inlineStylesheets: 'auto',

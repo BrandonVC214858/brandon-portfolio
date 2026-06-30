@@ -1,20 +1,30 @@
 ---
 import type { CollectionEntry } from 'astro:content';
+import { useTranslations, type Lang } from '../i18n/ui';
 
 interface Props {
   entry: CollectionEntry<'experience'>;
+  /** Active locale. */
+  lang: Lang;
   /** Position in the list; staggers the scroll-reveal delay. */
   index?: number;
 }
 
-const { entry, index = 0 } = Astro.props;
+const { entry, lang, index = 0 } = Astro.props;
+const t = useTranslations(lang);
 const { company, role, mode, start, end, sector, bullets, stack, link } = entry.data;
+
+// mode is a controlled enum stored in English; localize only the display.
+const modeLabel =
+  lang === 'es'
+    ? { Remote: 'Remoto', 'On-site': 'Presencial', Hybrid: 'Híbrido' }[mode]
+    : mode;
 ---
 
 <article class="job" data-reveal style={`--reveal-delay: ${index * 100}ms`}>
   <div class="job__meta">
     <p class="mono-label">{start} — {end}</p>
-    <p class="mono-label">{mode} · {sector}</p>
+    <p class="mono-label">{modeLabel} · {sector}</p>
   </div>
   <div class="job__body">
     <h3 class="job__role">{role}</h3>
@@ -28,7 +38,7 @@ const { company, role, mode, start, end, sector, bullets, stack, link } = entry.
     <ul class="job__bullets">
       {bullets.map((bullet) => <li>{bullet}</li>)}
     </ul>
-    <ul class="job__stack" aria-label="Technologies used">
+    <ul class="job__stack" aria-label={t('aria.tech')}>
       {stack.map((tech) => <li class="tag">{tech}</li>)}
     </ul>
   </div>

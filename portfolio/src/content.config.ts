@@ -10,6 +10,7 @@ import { file } from 'astro/loaders';
 const experience = defineCollection({
   loader: file('src/data/experience.json'),
   schema: z.object({
+    lang: z.enum(['en', 'es']),
     order: z.number(),
     company: z.string(),
     role: z.string(),
@@ -27,6 +28,7 @@ const experience = defineCollection({
 const projects = defineCollection({
   loader: file('src/data/projects.json'),
   schema: z.object({
+    lang: z.enum(['en', 'es']),
     order: z.number(),
     name: z.string(),
     role: z.string(),

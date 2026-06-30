@@ -1,6 +1,7 @@
 [
   {
     "id": "sspm",
+    "lang": "en",
     "order": 1,
     "company": "Secretaria de Seguridad Pública Municipal (SSPM)",
     "role": "Full Stack Developer",
@@ -17,6 +18,7 @@
   },
   {
     "id": "ctf",
+    "lang": "en",
     "order": 2,
     "company": "Capital A tu Favor (CTF)",
     "role": "Frontend Developer",
@@ -34,6 +36,7 @@
   },
   {
     "id": "mateos",
+    "lang": "en",
     "order": 3,
     "company": "Mateo's Florería",
     "role": "Full Stack Developer · Freelance",
@@ -45,6 +48,60 @@
       "Designed and built a complete e-commerce storefront end to end, translating wireframes into responsive, mobile-first layouts with a dynamic shopping cart.",
       "Engineered the server-side architecture and relational database to support transactions, deployed on AWS EC2 with asset storage on Cloudflare R2 to improve page-load performance.",
       "Handled domain registration, DNS provisioning and infrastructure setup through Hostinger to guarantee constant availability and uptime."
+    ],
+    "stack": ["JavaScript", "Python (Django)", "MySQL", "AWS EC2", "Cloudflare R2"],
+    "link": "https://floreria-mateos.com/"
+  },
+
+  {
+    "id": "sspm-es",
+    "lang": "es",
+    "order": 1,
+    "company": "Secretaría de Seguridad Pública Municipal (SSPM)",
+    "role": "Desarrollador Full Stack",
+    "mode": "On-site",
+    "start": "Jul 2024",
+    "end": "Actualidad",
+    "sector": "Sector público",
+    "bullets": [
+      "Mantengo y mejoro los módulos centrales del sistema ERP interno, refactorizando interfaces heredadas hacia vistas responsivas basadas en componentes y optimizando el rendimiento de consultas en esquemas de PostgreSQL y MySQL.",
+      "Automatizo tareas repetitivas de extracción de datos y administración de servidores con scripts en Python y PowerShell, eliminando procesos manuales y reduciendo el error humano.",
+      "Colaboro en ceremonias Agile/Scrum con equipos multidisciplinarios para coordinar cambios de software, hacer cumplir los estándares de control de versiones y revisar la calidad del código."
+    ],
+    "stack": ["Python", "PHP (Laravel)", "JavaScript", "PostgreSQL", "MySQL", "PowerShell", "Git"]
+  },
+  {
+    "id": "ctf-es",
+    "lang": "es",
+    "order": 2,
+    "company": "Capital A tu Favor (CTF)",
+    "role": "Desarrollador Frontend",
+    "mode": "Remote",
+    "start": "Sep 2024",
+    "end": "Oct 2025",
+    "sector": "Fintech",
+    "bullets": [
+      "Desarrollé y lancé funcionalidades de producto en React para flujos de onboarding fintech, orquestando datos de APIs REST con React Query y Axios para mantener un estado predecible y reducir peticiones de red redundantes.",
+      "Implementé flujos seguros de verificación de identidad integrando AWS Face Liveness (Rekognition), ofreciendo una experiencia de onboarding biométrico accesible que redujo el fraude.",
+      "Me encargué del despliegue del frontend en AWS Amplify con pipelines de CI/CD automatizados, acortando los ciclos de entrega y manteniendo alta la disponibilidad de la plataforma."
+    ],
+    "stack": ["React", "React Query", "Axios", "TailwindCSS", "AWS Amplify", "AWS Rekognition"],
+    "link": "https://www.capitalatufavor.mx/"
+  },
+  {
+    "id": "mateos-es",
+    "lang": "es",
+    "order": 3,
+    "company": "Mateo's Florería",
+    "role": "Desarrollador Full Stack · Freelance",
+    "mode": "Remote",
+    "start": "Ene 2024",
+    "end": "Jun 2024",
+    "sector": "E-commerce",
+    "bullets": [
+      "Diseñé y construí de principio a fin una tienda de e-commerce completa, traduciendo wireframes en interfaces responsivas mobile-first con un carrito de compras dinámico.",
+      "Desarrollé la arquitectura del servidor y la base de datos relacional para soportar transacciones, desplegada en AWS EC2 con almacenamiento de recursos en Cloudflare R2 para mejorar el tiempo de carga.",
+      "Gestioné el registro de dominio, la configuración de DNS y la infraestructura a través de Hostinger para garantizar disponibilidad y tiempo de actividad constantes."
     ],
     "stack": ["JavaScript", "Python (Django)", "MySQL", "AWS EC2", "Cloudflare R2"],
     "link": "https://floreria-mateos.com/"

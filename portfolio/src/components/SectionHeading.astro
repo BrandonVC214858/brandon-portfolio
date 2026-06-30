@@ -1,5 +1,9 @@
 ---
+import { useTranslations, type Lang } from '../i18n/ui';
+
 interface Props {
+  /** Active locale. */
+  lang: Lang;
   /** Codex entry number rendered in the eyebrow, e.g. "02". */
   index: string;
   /** Section title. */
@@ -8,13 +12,14 @@ interface Props {
   id: string;
 }
 
-const { index, title, id } = Astro.props;
+const { lang, index, title, id } = Astro.props;
+const t = useTranslations(lang);
 ---
 
 <section class="section" id={id}>
   <div class="container">
     <header class="section__head" data-reveal>
-      <p class="mono-label"><span class="twinkle" aria-hidden="true">✦</span> Entry {index}</p>
+      <p class="mono-label"><span class="twinkle" aria-hidden="true">✦</span> {t('entry')} {index}</p>
       <h2 class="section__title">{title}</h2>
       <div class="artifact-divider section__divider" aria-hidden="true"></div>
     </header>

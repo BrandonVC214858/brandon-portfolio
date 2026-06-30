@@ -1,7 +1,15 @@
 ---
 import { getImage } from 'astro:assets';
 import { PROFILE } from '../site.config';
+import { useTranslations, type Lang } from '../i18n/ui';
 import bgSrc from '../assets/void-bg.png';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
 
 /**
  * Signature element: the hero is a full-viewport "void" — the name floats
@@ -37,20 +45,20 @@ const bgNarrow = await getImage({ src: bgSrc, format: 'webp', quality: 55, width
   </div>
 
   <div class="container hero__content">
-    <p class="hero__badge mono-label">{PROFILE.availability}</p>
+    <p class="hero__badge mono-label">{t('hero.availability')}</p>
     <h1 class="hero__name">Brandon Venegas Cervantes</h1>
-    <p class="hero__summary">{PROFILE.summary}</p>
-    <p class="mono-label hero__meta">{PROFILE.location} ✦ {PROFILE.focus}</p>
+    <p class="hero__summary">{t('hero.summary')}</p>
+    <p class="mono-label hero__meta">{t('hero.location')} ✦ {t('hero.focus')}</p>
 
     <div class="hero__actions">
       <a class="hero__cta" href={`mailto:${PROFILE.email}`}>
-        <span>Get in touch</span>
+        <span>{t('hero.cta.email')}</span>
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <path d="M5 12h14" /><path d="m12 5 7 7-7 7" />
         </svg>
       </a>
       <a class="hero__secondary" href={PROFILE.github} rel="noopener noreferrer" target="_blank">
-        <span>GitHub</span>
+        <span>{t('hero.cta.github')}</span>
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <path d="M7 17 17 7" /><path d="M7 7h10v10" />
         </svg>

@@ -7,15 +7,20 @@ import '@fontsource/geist/500.css';
 import '../styles/global.css';
 import VoidAtmosphere from '../components/VoidAtmosphere.astro';
 import { SITE, PROFILE } from '../site.config';
+import { useTranslations, type Lang } from '../i18n/ui';
 
 interface Props {
-  /** Page title; falls back to the site default. */
+  /** Active locale. */
+  lang: Lang;
+  /** Page title; falls back to the localized default. */
   title?: string;
-  /** Meta description; falls back to the site default. */
+  /** Meta description; falls back to the localized default. */
   description?: string;
 }
 
-const { title = SITE.title, description = SITE.description } = Astro.props;
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const { title = t('meta.title'), description = t('meta.description') } = Astro.props;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
 /** Structured data so search engines understand who this page is about. */
@@ -23,7 +28,7 @@ const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Person',
   name: PROFILE.name,
-  jobTitle: PROFILE.role,
+  jobTitle: t('hero.role'),
   email: `mailto:${PROFILE.email}`,
   url: SITE.url,
   sameAs: [PROFILE.github, PROFILE.linkedin],
@@ -37,7 +42,7 @@ const jsonLd = {
 ---
 
 <!doctype html>
-<html lang={SITE.locale}>
+<html lang={lang}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -58,7 +63,7 @@ const jsonLd = {
     <meta property="og:url" content={canonicalURL} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:locale" content="en_US" />
+    <meta property="og:locale" content={t('meta.ogLocale')} />
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary" />
@@ -70,7 +75,7 @@ const jsonLd = {
   <body>
     <VoidAtmosphere />
     <div class="void-curtain" aria-hidden="true"></div>
-    <a class="skip-link" href="#main">Skip to content</a>
+    <a class="skip-link" href="#main">{t('skip')}</a>
     <slot />
 
     <script>

@@ -1,0 +1,70 @@
+---
+import { languages, useTranslations, type Lang } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+// Single-page site: each locale is one fixed URL. base is usually '/'.
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const hrefs: Record<Lang, string> = {
+  en: `${base}/`,
+  es: `${base}/es/`,
+};
+---
+
+<nav class="lang" aria-label={t('lang.aria')}>
+  {
+    (Object.keys(languages) as Lang[]).map((code) => (
+      <a
+        class="lang__link"
+        href={hrefs[code]}
+        aria-current={code === lang ? 'true' : undefined}
+        hreflang={code}
+      >
+        {languages[code]}
+      </a>
+    ))
+  }
+</nav>
+
+<style>
+  .lang {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.15rem;
+    padding: 0.2rem;
+    border: 1px solid rgba(73, 69, 82, 0.4);
+    border-radius: 9999px;
+    background: rgba(255, 255, 255, 0.02);
+  }
+
+  .lang__link {
+    font-family: var(--font-label);
+    font-size: var(--text-xs);
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    padding: 0.25rem 0.6rem;
+    border-radius: 9999px;
+    color: var(--ink-muted);
+    transition:
+      color 0.3s,
+      background-color 0.3s,
+      box-shadow 0.3s;
+  }
+
+  .lang__link:hover {
+    color: var(--primary);
+    text-decoration: none;
+  }
+
+  /* The equipped locale glows like a lit charm socket. */
+  .lang__link[aria-current='true'] {
+    color: var(--surface);
+    background: var(--primary);
+    box-shadow: 0 0 12px var(--glow-strong);
+  }
+</style>

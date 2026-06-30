@@ -1,12 +1,20 @@
 ---
 import { PROFILE } from '../site.config';
+import { useTranslations, type Lang } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
 
 const year = new Date().getFullYear();
 const contacts = [
-  { label: 'Email', value: PROFILE.email, href: `mailto:${PROFILE.email}` },
-  { label: 'Phone', value: PROFILE.phone, href: `tel:${PROFILE.phone.replace(/\s/g, '')}` },
-  { label: 'GitHub', value: 'BrandonVC214858', href: PROFILE.github },
-  { label: 'LinkedIn', value: 'Connect', href: PROFILE.linkedin },
+  { label: t('contact.email'), value: PROFILE.email, href: `mailto:${PROFILE.email}` },
+  { label: t('contact.phone'), value: PROFILE.phone, href: `tel:${PROFILE.phone.replace(/\s/g, '')}` },
+  { label: t('contact.github'), value: 'BrandonVC214858', href: PROFILE.github },
+  { label: t('contact.linkedin'), value: t('contact.linkedinValue'), href: PROFILE.linkedin },
 ];
 ---
 
@@ -29,11 +37,9 @@ const contacts = [
         <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
       </svg>
 
-      <p class="mono-label">✦ Entry 06 · Contact</p>
-      <h2 class="footer__title">Let's build something reliable.</h2>
-      <p class="footer__note">
-        Open to remote frontend and full-stack roles. The fastest way to reach me is email.
-      </p>
+      <p class="mono-label">✦ {t('entry')} 06 · {t('nav.contact')}</p>
+      <h2 class="footer__title">{t('footer.title')}</h2>
+      <p class="footer__note">{t('footer.note')}</p>
 
       <ul class="footer__contacts">
         {
@@ -55,7 +61,7 @@ const contacts = [
     </div>
 
     <p class="footer__legal mono-label">
-      © {year} {PROFILE.name} <span class="twinkle" aria-hidden="true">✦</span> Built with Astro
+      © {year} {PROFILE.name} <span class="twinkle" aria-hidden="true">✦</span> {t('footer.builtWith')}
     </p>
   </div>
 </footer>

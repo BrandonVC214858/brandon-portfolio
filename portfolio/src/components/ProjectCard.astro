@@ -1,13 +1,17 @@
 ---
 import type { CollectionEntry } from 'astro:content';
+import { useTranslations, type Lang } from '../i18n/ui';
 
 interface Props {
   entry: CollectionEntry<'projects'>;
+  /** Active locale. */
+  lang: Lang;
   /** Position in the grid; shifts the decorative gradient art per card. */
   index?: number;
 }
 
-const { entry, index = 0 } = Astro.props;
+const { entry, lang, index = 0 } = Astro.props;
+const t = useTranslations(lang);
 const { name, role, description, highlights, stack, link } = entry.data;
 const artShift = `${(index * 30) % 90}%`;
 /* Desynchronizes the relic-glow pulse between sibling cards. */
@@ -37,7 +41,7 @@ const pulseDelay = `${index * -2300}ms`;
     <ul class="project__highlights">
       {highlights.map((highlight) => <li>{highlight}</li>)}
     </ul>
-    <ul class="project__stack" aria-label="Technologies used">
+    <ul class="project__stack" aria-label={t('aria.tech')}>
       {stack.map((tech) => <li class="tag">{tech}</li>)}
     </ul>
   </div>

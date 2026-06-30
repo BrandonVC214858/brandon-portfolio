@@ -1,6 +1,7 @@
 [
   {
     "id": "compliance-engine",
+    "lang": "en",
     "order": 1,
     "name": "Financial Risk Compliance Engine",
     "role": "Backend & AI Engineer · Thesis project",
@@ -13,6 +14,7 @@
   },
   {
     "id": "ticket-system",
+    "lang": "en",
     "order": 2,
     "name": "Internal Ticket Management System",
     "role": "Full Stack · Backend lead",
@@ -25,6 +27,7 @@
   },
   {
     "id": "gestor-gym",
+    "lang": "en",
     "order": 3,
     "name": "Gestor Gym — Management UI Prototypes",
     "role": "UI/UX Designer & Developer",
@@ -32,6 +35,46 @@
     "highlights": [
       "Designed the full prototype set in Figma, from asset blueprints to interaction flows.",
       "Translated the designs into interactive, responsive view codebases consistent across device sizes."
+    ],
+    "stack": ["Figma", "React", "TailwindCSS"]
+  },
+
+  {
+    "id": "compliance-engine-es",
+    "lang": "es",
+    "order": 1,
+    "name": "Motor de Cumplimiento de Riesgo Financiero",
+    "role": "Ingeniero de Backend e IA · Proyecto de tesis",
+    "description": "Prototipo de detección automatizada de riesgo financiero (PLD/FT) que coteja transacciones contra conjuntos de datos internacionales de cumplimiento en tiempo real.",
+    "highlights": [
+      "Construí el motor de detección con Python y FastAPI, aplicando Generación Aumentada por Recuperación (RAG) para revisar entidades contra las listas de sanciones de la OFAC y la ONU.",
+      "Implementé pipelines de ingesta de datos y cobertura de pruebas estructurada, y luego dockericé todo el stack para un despliegue local fiable y reproducible con registro centralizado."
+    ],
+    "stack": ["Python", "FastAPI", "RAG", "Docker", "PostgreSQL"]
+  },
+  {
+    "id": "ticket-system-es",
+    "lang": "es",
+    "order": 2,
+    "name": "Sistema Interno de Gestión de Tickets",
+    "role": "Full Stack · Líder de backend",
+    "description": "Plataforma cliente-servidor de gestión de tareas con un motor Kanban para dar seguimiento al trabajo interno.",
+    "highlights": [
+      "Implementé autorización JWT sin estado y middleware personalizado para la exportación de reportes en Excel en el backend.",
+      "Desarrollé un tablero Kanban con arrastrar y soltar y actualizaciones de diseño en tiempo real impulsadas por renderizado de estado estructurado."
+    ],
+    "stack": ["React", "Python", "JWT", "REST APIs"]
+  },
+  {
+    "id": "gestor-gym-es",
+    "lang": "es",
+    "order": 3,
+    "name": "Gestor Gym — Prototipos de UI de Gestión",
+    "role": "Diseñador y Desarrollador UI/UX",
+    "description": "Prototipos de aplicación de alta fidelidad para un ecosistema de gestión de gimnasios.",
+    "highlights": [
+      "Diseñé el conjunto completo de prototipos en Figma, desde los blueprints de recursos hasta los flujos de interacción.",
+      "Traduje los diseños a bases de código de vistas interactivas y responsivas, consistentes en todos los tamaños de dispositivo."
     ],
     "stack": ["Figma", "React", "TailwindCSS"]
   }
